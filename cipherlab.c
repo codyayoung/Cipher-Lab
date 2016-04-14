@@ -3,17 +3,16 @@
 //Palomar ID: 008372648
 //Cody Young
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 void processFile(char *congress);
 void cipher(int shift, char *congress);
+char outputfile(char *congress);
 
 FILE *finput, *foutput;
 
 int main(void) {
 	int i;
-	static char congress[1000];
+	static char congress[272];
+
 	if (!(finput = fopen("congress.txt", "r"))) {
 		printf("Error: Cannot open file for input.");
 		exit(-1);
@@ -21,8 +20,7 @@ int main(void) {
 
 	processFile(congress);
 	cipher(1, congress);
-	printf("%s", congress);
-	
+	outputfile(congress);
 	return(0);
 
 }
@@ -30,23 +28,18 @@ int main(void) {
 void processFile(char *congress) {
 	int i;
 	
-	for (i = 0; i < 1000; ++i) {
+	for (i = 0; i < 272; ++i) {
 		fscanf(finput, "%c", &congress[i]);
 		if (islower(congress[i])) {
 			congress[i] = toupper(congress[i]);
 		}
-		
-	}
-	
-	for (i = 0; i < 1000; ++i) {
-
 	}
 }
 
 void cipher(int shift, char *congress) {
 	int i;
 
-	for (i = 0; i < 1000; ++i) {
+	for (i = 0; i < 272; ++i) {
 		if (congress[i] == 'Z') {
 			congress[i] += shift - 24;
 		}
@@ -54,4 +47,16 @@ void cipher(int shift, char *congress) {
 			congress[i] += shift;
 		}
 	}
+
+}
+
+char outputfile(char *congress) {
+	int i;
+	
+	for (i = 0; i < 272; ++i) {
+		if (congress[i] >= 65 && congress[i] <= 90) {
+			printf("%c", congress[i]);
+		}
+	}
+
 }
